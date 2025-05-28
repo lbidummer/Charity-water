@@ -12,7 +12,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 40px;
+      height: 64px; /* Increased height */
       background: #003366;
       display: flex;
       align-items: center;
@@ -22,9 +22,9 @@
       border-bottom: 2px solid #ffc907;
     }
     .hamburger {
-      width: 28px;
-      height: 28px;
-      margin-right: 18px;
+      width: 36px; /* Larger for touch */
+      height: 36px;
+      margin-right: 32px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -32,10 +32,10 @@
       z-index: 101;
     }
     .hamburger span {
-      height: 3px;
+      height: 4px;
       width: 100%;
       background: #fff;
-      margin: 3px 0;
+      margin: 5px 0;
       border-radius: 2px;
       transition: 0.3s;
       display: block;
@@ -43,13 +43,13 @@
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: 40px;
-      right: 18px;
+      top: 64px; /* Match navbar height */
+      right: 32px;
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      min-width: 140px;
-      padding: 6px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      min-width: 180px;
+      padding: 10px 0;
       z-index: 102;
     }
     .dropdown-menu.show {
@@ -57,12 +57,12 @@
     }
     .dropdown-menu a {
       display: block;
-      padding: 10px 18px;
+      padding: 16px 28px;
       color: #003366;
       text-decoration: none;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 20px;
       transition: background 0.2s;
     }
     .dropdown-menu a:hover {
@@ -70,7 +70,7 @@
     }
     body {
       /* Add padding to prevent content under nav */
-      padding-top: 40px;
+      padding-top: 64px;
     }
     .popup-overlay {
       display: none;
@@ -86,24 +86,24 @@
     }
     .popup-content {
       background: #fff;
-      padding: 32px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      padding: 48px 64px;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.16);
       font-family: 'Poppins', sans-serif;
-      font-size: 18px;
+      font-size: 24px;
       color: #003366;
       font-weight: 700;
       text-align: center;
-      min-width: 220px;
+      min-width: 320px;
       position: relative;
     }
     .popup-close {
       position: absolute;
-      top: 8px;
-      right: 12px;
+      top: 12px;
+      right: 18px;
       background: none;
       border: none;
-      font-size: 22px;
+      font-size: 32px;
       color: #003366;
       cursor: pointer;
       font-weight: bold;
@@ -113,12 +113,12 @@
       color: #003366;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 22px;
       border: none;
-      border-radius: 6px;
-      padding: 12px 32px;
-      margin-top: 8px;
-      margin-bottom: 18px;
+      border-radius: 8px;
+      padding: 18px 48px;
+      margin-top: 12px;
+      margin-bottom: 24px;
       cursor: pointer;
       transition: background 0.2s;
     }
@@ -126,18 +126,51 @@
       background: #ffd84d;
     }
     .donate-message {
-      font-size: 14px;
+      font-size: 18px;
       color: #003366;
       font-family: 'Poppins', sans-serif;
       font-weight: 500;
       margin-top: 0;
+    }
+    @media (max-width: 700px) {
+      .navbar {
+        height: 48px;
+      }
+      .hamburger {
+        width: 28px;
+        height: 28px;
+        margin-right: 12px;
+      }
+      .dropdown-menu {
+        top: 48px;
+        right: 8px;
+        min-width: 120px;
+        border-radius: 8px;
+      }
+      .dropdown-menu a {
+        font-size: 16px;
+        padding: 10px 16px;
+      }
+      .popup-content {
+        padding: 24px 10vw;
+        font-size: 16px;
+        min-width: 0;
+      }
+      .popup-close {
+        font-size: 22px;
+        top: 8px;
+        right: 10px;
+      }
+      body {
+        padding-top: 48px;
+      }
     }
   </style>
   <!-- ...existing code... -->
 </head>
 <body style="background: #003366;">
   <nav class="navbar">
-    <span style="color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 22px; margin-left: 32px; letter-spacing: 1px; flex: 1; text-align: left;">
+    <span style="color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 32px; margin-left: 48px; letter-spacing: 1px; flex: 1; text-align: left;">
       Charity: Water
     </span>
     <div class="hamburger" id="hamburger-menu" aria-label="Open navigation" tabindex="0">
@@ -218,20 +251,23 @@
       }
     });
   </script>
-  <h2 style="margin: 40px auto 0 auto; display: block; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 51px; line-height: 1; width: max-content;">
+  <h2 style="margin: 80px auto 0 auto; display: block; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 80px; line-height: 1.1; width: max-content;">
     Clean Water.<br>
     <span style="white-space: nowrap;">Real Impact.</span>
   </h2>
-  <h3 style="text-align: center; margin: 13px auto 0 auto; font-size: 15px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; width: max-content;">
+  <div style="display: flex; justify-content: center; align-items: center; margin: 32px 0 0 0;">
+    <img src="jerrycan.png" alt="Yellow Jerrycan" style="max-width: 220px; width: 22vw; height: auto; display: block;"/>
+  </div>
+  <h3 style="text-align: center; margin: 30px auto 0 auto; font-size: 28px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; width: max-content;">
     Every dollar helps transform lives,<br>
     giving you transparent results and<br>
     lasting change you can believe in.
   </h3>
-  <div style="position: absolute; left: 0; right: 0; top: 180px; bottom: 0; background: #003366; z-index: -1;"></div>
-  <p style="position: fixed; bottom: 30px; right: 40px; font-size: 15px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; text-align: center; z-index: 10; width: 220px;">
+  <div style="position: absolute; left: 0; right: 0; top: 260px; bottom: 0; background: #003366; z-index: -1;"></div>
+  <p style="position: fixed; bottom: 60px; right: 80px; font-size: 22px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; text-align: center; z-index: 10; width: 340px;">
     Your gift sparks lasting <span style="color: #ffc907;">change</span>.<br>
     Give clean water, give <span style="color: #ffc907;">life</span>.
   </p>
-  <!-- ...content goes here... -->
+  <!-- ...existing code... -->
 </body>
 </html>
