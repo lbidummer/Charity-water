@@ -84,7 +84,7 @@ body::before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url('img/backgroundimage2.jpeg') no-repeat center center fixed;
+  background: url('img/backgroundimage2.jpg') no-repeat center center fixed;
   background-size: cover;
   z-index: -2;
   pointer-events: none;
@@ -160,7 +160,7 @@ body::before {
   gap: 48px;
 }
 .jerrycan-image {
-  max-width: 180px;
+  max-width: 50px;
   width: 14vw;
   height: auto;
   display: block;
