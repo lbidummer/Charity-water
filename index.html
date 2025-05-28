@@ -71,6 +71,8 @@
     body {
       /* Add padding to prevent content under nav */
       padding-top: 64px;
+      background: #003366 url('img/backgroundimage.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
     .popup-overlay {
       display: none;
@@ -168,7 +170,7 @@
   </style>
   <!-- ...existing code... -->
 </head>
-<body style="background: #003366;">
+<body>
   <nav class="navbar">
     <span style="color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 32px; margin-left: 48px; letter-spacing: 1px; flex: 1; text-align: left;">
       Charity: Water
@@ -193,6 +195,13 @@
         Contact us at<br><span style="color:#ffc907;">+1 (646) 688-2323</span>
       </div>
     </div>
+  </div>
+  <!-- Donation ticker section -->
+  <div id="donation-ticker-container" style="position: fixed; top: 80px; left: 0; width: 320px; height: 420px; overflow: hidden; z-index: 50; pointer-events: none; background: transparent; border: 3px solid #ffc907; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.10);">
+    <div style="width: 100%; text-align: center; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 26px; color: #003366; background: #ffc907; border-top-left-radius: 15px; border-top-right-radius: 15px; letter-spacing: 1px; padding: 10px 0 6px 0; position: sticky; top: 0; z-index: 2;">
+      Donations
+    </div>
+    <div id="donation-ticker" style="position: absolute; width: 100%; top: 48px;"></div>
   </div>
   <script>
     // Hamburger menu toggle
@@ -250,16 +259,147 @@
         popupOverlay.classList.remove('show');
       }
     });
+
+    // Donation ticker logic
+    const fakeFirstNames = [
+      "Alice", "Bob", "Charlie", "Diana", "Ethan", "Fiona", "George", "Hannah", "Ivan", "Julia",
+      "Kevin", "Lily", "Mason", "Nina", "Oscar", "Paula", "Quinn", "Rita", "Sam", "Tina",
+      "Uma", "Victor", "Wendy", "Xander", "Yara", "Zane"
+    ];
+    const fakeLastInitials = [
+      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ];
+    function randomName() {
+      const first = fakeFirstNames[Math.floor(Math.random() * fakeFirstNames.length)];
+      const last = fakeLastInitials[Math.floor(Math.random() * fakeLastInitials.length)];
+      return `${first} ${last}.`;
+    }
+    function randomAmount() {
+      const r = Math.random();
+      if (r < 0.5) {
+        // 50% chance: $1-$10 (integers)
+        return Math.floor(Math.random() * 10) + 1;
+      } else {
+        // 50% chance: $11-$100 in increments of $5
+        const increments = [];
+        for (let i = 11; i <= 100; i += 5) increments.push(i);
+        return increments[Math.floor(Math.random() * increments.length)];
+      }
+    }
+    function randomMessage() {
+      const messages = [
+        "donated", "gave", "contributed", "supports with", "gifted", "helped with"
+      ];
+      return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    const ticker = document.getElementById('donation-ticker');
+    const tickerContainer = document.getElementById('donation-ticker-container');
+    const tickerHeight = tickerContainer.offsetHeight;
+    const donationRowHeight = 48; // px
+
+    function createDonationRow(name, amount) {
+      const row = document.createElement('div');
+      row.className = 'donation-row';
+      row.style.position = 'absolute';
+      row.style.left = '0';
+      row.style.width = '100%';
+      row.style.height = donationRowHeight + 'px';
+      row.style.display = 'flex';
+      row.style.alignItems = 'center';
+      row.style.padding = '0 18px';
+      row.style.fontFamily = "'Poppins', sans-serif";
+      row.style.fontWeight = '700';
+      row.style.fontSize = '20px';
+      row.style.color = '#003366';
+      row.style.background = '#ffc907';
+      row.style.borderRadius = '10px';
+      row.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)';
+      row.style.marginBottom = '10px';
+      row.style.opacity = '0.97';
+      row.innerHTML = `<span style="color:#003366;">${name}</span> <span style="margin: 0 8px;">${randomMessage()}</span> <span style="color:#007a3d;">$${amount}</span>`;
+      return row;
+    }
+
+    let donationQueue = [];
+    let animationFrame;
+    let lastTimestamp = 0;
+    let speed = 40; // px per second
+
+    function addDonation() {
+      const name = randomName();
+      const amount = randomAmount();
+      const row = createDonationRow(name, amount);
+      // Place new row above the visible area
+      row.style.top = (-donationRowHeight) + 'px';
+      ticker.appendChild(row);
+      donationQueue.push({el: row, top: -donationRowHeight});
+    }
+
+    function animateDonations(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+      for (let i = 0; i < donationQueue.length; i++) {
+        const item = donationQueue[i];
+        item.top += speed * delta;
+        item.el.style.top = item.top + 'px';
+      }
+      // Remove donations that have scrolled past the bottom
+      while (donationQueue.length && donationQueue[0].top > tickerHeight) {
+        ticker.removeChild(donationQueue[0].el);
+        donationQueue.shift();
+      }
+      animationFrame = requestAnimationFrame(animateDonations);
+    }
+
+    function startDonationTicker() {
+      // Clear existing
+      ticker.innerHTML = '';
+      donationQueue = [];
+      // Add initial donations to fill the area
+      const rows = Math.ceil(tickerHeight / (donationRowHeight + 10)) + 2;
+      for (let i = 0; i < rows; i++) {
+        addDonation();
+      }
+      // Start animation
+      lastTimestamp = 0;
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(animateDonations);
+    }
+
+    // Add a new donation every 5-15 seconds
+    function scheduleNextDonation() {
+      const nextDelay = Math.floor(Math.random() * 11000) + 5000; // 5000-16000 ms
+      setTimeout(() => {
+        addDonation();
+        scheduleNextDonation();
+      }, nextDelay);
+    }
+
+    // Start ticker on load
+    startDonationTicker();
+    scheduleNextDonation();
+
+    // Optional: restart ticker on resize for responsiveness
+    window.addEventListener('resize', () => {
+      startDonationTicker();
+    });
   </script>
-  <h2 style="margin: 80px auto 0 auto; display: block; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 80px; line-height: 1.1; width: max-content;">
-    Clean Water.<br>
-    <span style="white-space: nowrap;">Real Impact.</span>
-  </h2>
-  <h3 style="text-align: center; margin: 30px auto 0 auto; font-size: 28px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; width: max-content;">
-    Every dollar helps transform lives,<br>
-    giving you transparent results and<br>
-    lasting change you can believe in.
-  </h3>
+  <div style="display: flex; justify-content: center; align-items: flex-start; margin: 80px 0 0 0;">
+    <h2 style="margin: 0; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 80px; line-height: 1.1; width: max-content;">
+      Clean Water.<br>
+      <span style="white-space: nowrap;">Real Impact.</span>
+    </h2>
+    <img src="img/Jerrycan.png" alt="Yellow Jerrycan" style="max-width: 90px; width: 7vw; height: auto; margin-left: 40px; margin-top: 10px; display: block;"/>
+  </div>
+  <div style="display: flex; justify-content: center; align-items: center; margin: 30px 0 0 0;">
+    <h3 style="text-align: center; margin: 0; font-size: 28px; color: #77a8bb; font-family: 'Poppins', sans-serif; font-weight: 700; width: max-content;">
+      Every dollar helps transform lives,<br>
+      giving you transparent results and<br>
+      lasting change you can believe in.
+    </h3>
+  </div>
   <div style="display: flex; justify-content: center; align-items: center; margin: 33px 0 0 0;">
     <img src="img/heroimage.png" alt="Hero" style="max-width: 810px; width: 72vw; height: auto; display: block; border-radius: 22px; box-shadow: 0 8px 48px rgba(0,0,0,0.13); z-index: 9;">
   </div>
