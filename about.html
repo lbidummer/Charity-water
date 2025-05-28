@@ -10,13 +10,15 @@
       background: #003366;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 40px;
+      height: 64px;
       background: #003366;
       display: flex;
       align-items: center;
@@ -26,9 +28,9 @@
       border-bottom: 2px solid #ffc907;
     }
     .hamburger {
-      width: 28px;
-      height: 28px;
-      margin-right: 18px;
+      width: 36px;
+      height: 36px;
+      margin-right: 32px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -36,10 +38,10 @@
       z-index: 101;
     }
     .hamburger span {
-      height: 3px;
+      height: 4px;
       width: 100%;
       background: #fff;
-      margin: 3px 0;
+      margin: 5px 0;
       border-radius: 2px;
       transition: 0.3s;
       display: block;
@@ -47,13 +49,13 @@
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: 40px;
-      right: 18px;
+      top: 64px;
+      right: 32px;
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      min-width: 140px;
-      padding: 6px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      min-width: 180px;
+      padding: 10px 0;
       z-index: 102;
     }
     .dropdown-menu.show {
@@ -61,19 +63,19 @@
     }
     .dropdown-menu a {
       display: block;
-      padding: 10px 18px;
+      padding: 16px 28px;
       color: #003366;
       text-decoration: none;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 20px;
       transition: background 0.2s;
     }
     .dropdown-menu a:hover {
       background: #f0f4f8;
     }
     body {
-      padding-top: 40px;
+      padding-top: 64px;
     }
     .popup-overlay {
       display: none;
@@ -89,33 +91,103 @@
     }
     .popup-content {
       background: #fff;
-      padding: 32px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      padding: 48px 64px;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.16);
       font-family: 'Poppins', sans-serif;
-      font-size: 18px;
+      font-size: 24px;
       color: #003366;
       font-weight: 700;
       text-align: center;
-      min-width: 220px;
+      min-width: 320px;
       position: relative;
     }
     .popup-close {
       position: absolute;
-      top: 8px;
-      right: 12px;
+      top: 12px;
+      right: 18px;
       background: none;
       border: none;
-      font-size: 22px;
+      font-size: 32px;
       color: #003366;
       cursor: pointer;
       font-weight: bold;
+    }
+    /* Main content styles for full screen */
+    .about-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 90px 40px 40px 40px;
+      min-height: calc(100vh - 64px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .about-title {
+      margin: 60px auto 0 auto;
+      color: #ffc907;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 70px;
+      line-height: 1.1;
+      width: max-content;
+      text-align: center;
+    }
+    .about-mission {
+      text-align: center;
+      margin: 40px auto 0 auto;
+      color: #ffc907;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      width: max-content;
+      text-decoration: underline;
+    }
+    .about-text {
+      color: #77a8bb;
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      font-weight: 400;
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      border: 1.5px solid #77a8bb;
+      border-radius: 18px;
+      padding: 36px 48px;
+      background: rgba(0,0,0,0.10);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    }
+    .about-text span {
+      color: #ffc907;
+      font-size: 30px;
+      font-weight: 700;
+    }
+    @media (max-width: 900px) {
+      .about-title {
+        font-size: 38px;
+        margin-top: 30px;
+      }
+      .about-mission {
+        font-size: 22px;
+        margin-top: 20px;
+      }
+      .about-text {
+        font-size: 16px;
+        padding: 18px 10vw;
+        border-radius: 10px;
+        margin-top: 18px;
+      }
+      .about-container {
+        padding: 60px 8px 24px 8px;
+      }
     }
   </style>
 </head>
 <body style="background: #003366;">
   <nav class="navbar">
-    <span style="color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 22px; margin-left: 32px; letter-spacing: 1px; flex: 1; text-align: left;">
+    <span style="color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 32px; margin-left: 48px; letter-spacing: 1px; flex: 1; text-align: left;">
       Charity: Water
     </span>
     <div class="hamburger" id="hamburger-menu" aria-label="Open navigation" tabindex="0">
@@ -193,14 +265,16 @@
       }
     });
   </script>
-  <h2 style="margin: 40px auto 0 auto; display: block; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 51px; line-height: 1; width: max-content;">
-    About Us
-  </h2>
-  <h3 style="text-align: center; margin: 24px auto 0 auto; color: #ffc907; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 24px; width: max-content; text-decoration: underline;">
-    Our Mission
-  </h3>
-  <p style="color: #77a8bb; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 400; max-width: 700px; margin: 24px auto 0 auto; text-align: center; border: 1px solid #77a8bb; border-radius: 8px; padding: 18px 28px;">
-    We strive to bring clean and safe drinking water to people in developing countries. Our mission is to end the global water crisis by funding sustainable water projects in the world’s most vulnerable communities. We believe that access to clean water is a basic human right — one that transforms <span style="color: #ffc907; font-size: 18px;">health</span>, empowers <span style="color: #ffc907; font-size: 18px;">education</span>, boosts economic <span style="color: #ffc907; font-size: 18px;">opportunity</span>, and gives <span style="color: #ffc907; font-size: 18px;">hope</span>. Every donation goes directly to water projects, creating real and lasting change for families, schools, and entire communities.
-  </p>
+  <div class="about-container">
+    <h2 class="about-title">
+      About Us
+    </h2>
+    <h3 class="about-mission">
+      Our Mission
+    </h3>
+    <p class="about-text">
+      We strive to bring clean and safe drinking water to people in developing countries. Our mission is to end the global water crisis by funding sustainable water projects in the world’s most vulnerable communities. We believe that access to clean water is a basic human right — one that transforms <span>health</span>, empowers <span>education</span>, boosts economic <span>opportunity</span>, and instills <span>hope</span>. Every donation goes directly to water projects, creating real and lasting change for families, schools, and entire communities.
+    </p>
+  </div>
 </body>
 </html>
